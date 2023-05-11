@@ -1,0 +1,63 @@
+{
+  "name": "tc",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@config-plugins/react-native-blob-util": "^5.0.0",
+    "@config-plugins/react-native-pdf": "^5.0.0",
+    "@expo/webpack-config": "^18.0.1",
+    "@react-native-async-storage/async-storage": "1.17.11",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/stack": "^6.3.16",
+    "deprecated-react-native-prop-types": "^4.1.0",
+    "dotenv": "^16.0.3",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-jsx": "^11.0.0",
+    "eslint-config-standard-react": "^13.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "expo": "~48.0.15",
+    "expo-auth-session": "~4.0.3",
+    "expo-constants": "~14.2.1",
+    "expo-crypto": "~12.2.1",
+    "expo-status-bar": "~1.4.4",
+    "expo-web-browser": "~12.1.1",
+    "firebase": "^9.21.0",
+    "react": "18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "0.71.7",
+    "react-native-blob-util": "^0.17.3",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-keyboard-aware-view": "^0.0.14",
+    "react-native-pdf": "^6.6.2",
+    "react-native-safe-area-context": "4.5.0",
+    "react-native-screens": "~3.20.0",
+    "react-native-select-dropdown": "^3.3.3",
+    "react-native-ui-lib": "^7.3.2",
+    "react-native-vector-icons": "^9.2.0",
+    "react-native-view-pdf": "0.1.18",
+    "react-native-web": "~0.18.11"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "standard",
+      "standard-jsx",
+      "standard-react"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}
