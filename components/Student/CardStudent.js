@@ -1,8 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { deleteStudent } from "../../database/controllers/student.controllers";
 import { styles } from "../../styles/globalStyles";
 
-const CardStudent = ({ student }) => {
+const CardStudent = ({ student, render, setRender }) => {
+  const onDelete = () => {
+    deleteStudent(student.id).then(() => setRender(!render));
+  };
+
   return (
     <View style={{ ...styles.box, gap: 10 }}>
       <View style={{ flexDirection: "row", gap: 20 }}>
@@ -17,23 +22,36 @@ const CardStudent = ({ student }) => {
           <Text style={{ ...styles.text1 }}>
             {student.name} {student.lastName}
           </Text>
-          <View>
-            <Text>
-              <Text style={{ ...stylesStudent.strong }}>Grado: </Text>
-              {student.grade}
-            </Text>
-            <Text>
-              <Text style={{ ...stylesStudent.strong }}>Edad: </Text>
-              {student.age}
-            </Text>
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <View>
+              <Text>
+                <Text style={{ ...stylesStudent.strong }}>Grado: </Text>
+                {student.grade}
+              </Text>
+              <Text>
+                <Text style={{ ...stylesStudent.strong }}>Edad: </Text>
+                {student.age}
+              </Text>
+            </View>
           </View>
+        </View>
+        <View
+          style={{
+            marginLeft: "auto",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={{ textAlign: "right" }} onPress={onDelete}>
+            ✖
+          </Text>
+          <Button title="evaluar" />
         </View>
       </View>
       <View style={{ gap: 10 }}>
-        <Text>
-          <Text style={{ ...stylesStudent.strong }}>Institucion: </Text>{" "}
-          {student.institution}
-        </Text>
         <View style={{ ...stylesStudent.description }}>
           <Text>❗ {student.note}</Text>
         </View>

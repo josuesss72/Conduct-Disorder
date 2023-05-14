@@ -1,6 +1,8 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   orderBy,
   query,
@@ -15,7 +17,7 @@ export async function createNewStudent(data) {
   }
 }
 
-export async function getStudents(Uid) {
+export async function getStudents(Uid, value) {
   try {
     const collectionRef = collection(db, "student");
     const q = query(collectionRef, orderBy("createdAt", "desc"));
@@ -23,23 +25,45 @@ export async function getStudents(Uid) {
     return new Promise((resolve, reject) => {
       onSnapshot(q, (snap) => {
         const arr = snap.docs.map((doc) => {
-          if (doc.data().userUid === Uid) {
+          const {
+            name,
+            lastName,
+            gender,
+            age,
+            grade,
+            institution,
+            note,
+            userUid,
+          } = doc.data();
+          if (
+            doc.data().userUid === Uid &&
+            institution.toLowerCase().trim() === value.toLowerCase().trim()
+          ) {
             return {
               id: doc.id,
-              name: doc.data().name,
-              lastName: doc.data().lastName,
-              gender: doc.data().gender,
-              age: doc.data().age,
-              grade: doc.data().grade,
-              institution: doc.data().institution,
-              note: doc.data().note,
-              userUid: doc.data().userUid,
+              name,
+              lastName,
+              gender,
+              age,
+              grade,
+              institution,
+              note,
+              userUid,
             };
           }
         });
         resolve(arr);
       });
     });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteStudent(id) {
+  try {
+    const docRef = doc(db, "student", id);
+    deleteDoc(docRef);
   } catch (error) {
     console.log(error);
   }

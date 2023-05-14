@@ -2,41 +2,34 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Button, TextInput, Alert } from "react-native";
 import { auth } from "../database/firebase";
 import {
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { styles } from "../styles/globalStyles";
 import Loading from "../components/loading/Loading";
-import { userExists } from "../database/controllers/user.controllers";
 import FormUserInfoScreen from "./FormUserInfo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {
+  setTokenStorage,
+  userExists,
+  VerifyToken,
+} from "../database/middlewares/user.middlewares";
+import { VerifyUserLoggedAfter } from "../database/middlewares/auth.middlewares";
 
-function SignUpScreen({ children, userCredent, setUserCredent }) {
+function SignUpScreen({ children, userCredent, setUserCredent, renderSign }) {
   const [isLogin, setIsLogin] = useState({ login: false, process: false });
-  const [load, setLoad] = useState(true);
+  const [load, setLoad] = useState(false);
   const [electronicAuth, setElectronicAuth] = useState({
     email: "",
     password: "",
   });
 
-  const handlePress = () => {
-    const googleProvider = new GoogleAuthProvider();
-    signInWithPopup(auth, googleProvider)
-      .then((res) => {
-        setUserCredent(res.user);
-        setLoad(true);
-      })
-      .catch((err) => console.log(err));
-  };
-
   const handleChangeText = (text, name) => {
     setElectronicAuth({ ...electronicAuth, [name]: text });
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    setLoad(true);
     signInWithEmailAndPassword(
       auth,
       electronicAuth.email,
@@ -44,9 +37,11 @@ function SignUpScreen({ children, userCredent, setUserCredent }) {
     )
       .then((res) => {
         setUserCredent(res.user);
-        setLoad(true);
+        setTokenStorage(res.user.stsTokenManager.accessToken);
+        //setLoad(true);
       })
       .catch((err) => {
+        setLoad(false);
         console.log(err);
         Alert.alert(err.message);
       });
@@ -60,6 +55,7 @@ function SignUpScreen({ children, userCredent, setUserCredent }) {
     )
       .then((res) => {
         setUserCredent(res.user);
+        console.log(isLogin);
       })
       .catch((err) => {
         console.log(err);
@@ -69,59 +65,56 @@ function SignUpScreen({ children, userCredent, setUserCredent }) {
 
   useEffect(() => {
     if (userCredent) {
-      handleUserStateChange(userCredent);
-    } else {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          setUserCredent(user);
+      userExists(userCredent.uid).then((boolean) => {
+        if (boolean) {
+          console.log("entra userExists");
+          VerifyToken()
+            .then((isToken) => {
+              setIsLogin({ process: true, login: true });
+              setLoad(false);
+            })
+            .catch(() => {
+              setUserCredent();
+              setIsLogin({ process: false, login: false });
+            });
         } else {
-          console.log("Not Logged");
-          setLoad(false);
+          Alert.alert("Autenticado pero no registrado");
+          //setLoad(false);
         }
       });
-    }
-  }, [userCredent]);
-
-  const handleUserStateChange = async (user) => {
-    const isExistsUser = await userExists(user.uid);
-    if (isExistsUser) {
-      setIsLogin({ process: true, login: true });
-      setLoad(false);
     } else {
-      setLoad(false);
+      /*VerifyUserLoggedAfter()
+        .then((user) => {
+          if(user){
+            setUserCredent(user);
+          } 
+        })
+        .catch((err) => {
+          console.log(err);
+        });*/
     }
-  };
+  }, [userCredent, renderSign]);
 
   if (!isLogin.login && !userCredent) {
     return (
       <Loading loading={load}>
         <KeyboardAwareScrollView
-          style={{ ...styles.body, ...styles.container }}
+          style={{
+            ...styles.body,
+            ...styles.container,
+            backgroundColor: "#6DA9E4",
+          }}
         >
           <View
             style={{
               gap: 20,
               ...styles.box,
-              marginVertical: "15%",
+              marginVertical: "25%",
             }}
           >
             <View style={{ gap: 10 }}>
               <Text style={{ fontSize: 40 }}>Bienvenido a TC</Text>
               <Text style={styles.text1}>Registrate o inicia seccion</Text>
-              <View
-                style={{
-                  ...styles.buttonGroup,
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  backgroundColor: "#146C94",
-                }}
-              >
-                <Button
-                  title="Login with Google"
-                  onPress={handlePress}
-                  color={"white"}
-                />
-              </View>
             </View>
             {/* INPUTS */}
             <View style={{ gap: 15 }}>

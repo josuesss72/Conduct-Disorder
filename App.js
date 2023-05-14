@@ -1,39 +1,22 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import Home from './screen/Home';
-import SignUpScreen from './screen/SignUp';
-
-// const Stack = createStackNavigator();
-
-// function MyStack () {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name='Conduct Disorder - SignUp' component={SignUpScreen} />
-//       <Stack.Screen name='Conduct Disorder - Home' component={Home} />
-//     </Stack.Navigator>
-//   );
-// }
+import React, { useState } from "react";
+import Home from "./screen/Home";
+import SignUpScreen from "./screen/SignUp";
 
 export default function App() {
-
   const [userCredent, setUserCredent] = useState();
-
-  console.log(userCredent)
+  const [renderSign, setRenderSign] = useState(false);
 
   return (
-    <SignUpScreen userCredent={userCredent} setUserCredent={setUserCredent}>
-      <Home userCredent={userCredent}/>
+    <SignUpScreen
+      userCredent={userCredent}
+      setUserCredent={setUserCredent}
+      renderSign={renderSign}
+    >
+      <Home
+        userCredent={userCredent}
+        setRenderSign={setRenderSign}
+        renderSign={renderSign}
+      />
     </SignUpScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -5,6 +5,7 @@ export const colors = {
   orange: "#FEBE8C",
   yellow: "#F4E185",
   red: "#FF6969",
+  blue: "#2F58CD",
 };
 
 export const styles = StyleSheet.create({
@@ -27,6 +28,9 @@ export const styles = StyleSheet.create({
   },
   text2: {
     fontSize: 14,
+  },
+  subtitle: {
+    fontSize: 20,
   },
   container: {
     flex: 1,

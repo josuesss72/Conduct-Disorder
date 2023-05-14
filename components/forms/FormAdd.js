@@ -26,11 +26,6 @@ const FormAdd = ({ setData, data }) => {
         keyboardType="numeric"
       />
       <TextInput
-        onChangeText={(text) => handleChangeText(text, "institution")}
-        style={{ ...styles.text_input }}
-        placeholder="Institucion"
-      />
-      <TextInput
         onChangeText={(text) => handleChangeText(text, "grade")}
         style={{ ...styles.text_input }}
         placeholder="Grado"

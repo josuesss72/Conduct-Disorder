@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,9 +7,19 @@ import ProfileScreen from "./profile";
 import ActivitiesScreen from "./activities";
 import { colors } from "../styles/globalStyles";
 import Icon from "react-native-vector-icons/Feather";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { KEY_TOKEN } from "../utils/keyStorage";
 
-function Home({ userCredent }) {
+function Home({ userCredent, setRenderSign, renderSign }) {
   const Tab = createBottomTabNavigator();
+  const [load, setLoad] = useState(false);
+
+  const onSalir = async () => {
+    await AsyncStorage.removeItem(KEY_TOKEN);
+    setLoad(true);
+    setRenderSign(!renderSign);
+  };
+
   const MyTab = () => {
     return (
       <Tab.Navigator
@@ -36,14 +46,16 @@ function Home({ userCredent }) {
       >
         <Tab.Screen
           name="Perfil"
-          children={() => <ProfileScreen userCredent={userCredent} />}
+          children={() => (
+            <ProfileScreen userCredent={userCredent} load={load} />
+          )}
           options={{
             title: "PERFIL",
             headerStyle: {
               backgroundColor: colors.orange,
             },
             headerTintColor: colors.white,
-            headerRight: () => <Button title="Salir" />,
+            headerRight: () => <Button title="Salir" onPress={onSalir} />,
             tabBarStyle: {
               backgroundColor: colors.orange,
             },
