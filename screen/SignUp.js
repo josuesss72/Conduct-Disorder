@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, TextInput, Alert } from "react-native";
+import { View, Text, Button, TextInput, Alert, Image } from "react-native";
 import { auth } from "../database/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -48,6 +48,7 @@ function SignUpScreen({ children, userCredent, setUserCredent, renderSign }) {
   };
 
   const handleCreateAccount = () => {
+    setLoad(true);
     createUserWithEmailAndPassword(
       auth,
       electronicAuth.email,
@@ -78,7 +79,7 @@ function SignUpScreen({ children, userCredent, setUserCredent, renderSign }) {
               setIsLogin({ process: false, login: false });
             });
         } else {
-          Alert.alert("Autenticado pero no registrado");
+          setLoad(false);
           //setLoad(false);
         }
       });
@@ -100,20 +101,25 @@ function SignUpScreen({ children, userCredent, setUserCredent, renderSign }) {
       <Loading loading={load}>
         <KeyboardAwareScrollView
           style={{
-            ...styles.body,
-            ...styles.container,
             backgroundColor: "#6DA9E4",
+            padding: 10,
           }}
         >
+          <View style={{ alignItems: "center", marginTop: 35 }}>
+            <Image
+              style={{ ...styles.logo }}
+              source={require("../database/data/pdf/logo2.jpg")}
+            />
+          </View>
           <View
             style={{
               gap: 20,
               ...styles.box,
-              marginVertical: "25%",
+              marginTop: 20,
             }}
           >
             <View style={{ gap: 10 }}>
-              <Text style={{ fontSize: 40 }}>Bienvenido a TC</Text>
+              <Text style={{ fontSize: 30 }}>Welcome to Conduct Disorder</Text>
               <Text style={styles.text1}>Registrate o inicia seccion</Text>
             </View>
             {/* INPUTS */}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { deleteStudent } from "../../database/controllers/student.controllers";
 import { styles } from "../../styles/globalStyles";
 
@@ -7,6 +7,11 @@ const CardStudent = ({ student, render, setRender }) => {
   const onDelete = () => {
     deleteStudent(student.id).then(() => setRender(!render));
   };
+
+  /*const onAssess = async () => {
+    await AsyncStorage.setItem(KEY_ID_STUDENT, student.id);
+    navigation.navigate("Assess");
+  };*/
 
   return (
     <View style={{ ...styles.box, gap: 10 }}>
@@ -48,7 +53,6 @@ const CardStudent = ({ student, render, setRender }) => {
           <Text style={{ textAlign: "right" }} onPress={onDelete}>
             ✖
           </Text>
-          <Button title="evaluar" />
         </View>
       </View>
       <View style={{ gap: 10 }}>

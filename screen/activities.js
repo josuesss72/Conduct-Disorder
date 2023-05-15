@@ -44,27 +44,14 @@ const ActivitiesScreen = () => {
           />
         </View>
         <View style={{ ...stylesActivites.item }}>
-          <Text style={{ fontSize: 17, color: colors.blue }}>
-            😴 Cuentos para dormir
-          </Text>
-          <View style={{ flexDirection: "row" }}>
-            <Button
-              title="parte 1"
-              onPress={() =>
-                Linking.openURL(
-                  "https://drive.google.com/file/d/1Ubi55_0G8hXaTTbkzAl0EL0HqYtdVQBN/view?usp=share_link"
-                )
-              }
-            />
-            <Button
-              title="parte 2"
-              onPress={() =>
-                Linking.openURL(
-                  "https://docs.google.com/document/d/1Ml3TYtE3b0xuphQ1Obyh6gorsOOnpWG4/edit?usp=share_link&ouid=100097056483532467852&rtpof=true&sd=true"
-                )
-              }
-            />
-          </View>
+          <Button
+            title="🦁 Actividad reflexiva en la selva"
+            onPress={() =>
+              Linking.openURL(
+                "https://drive.google.com/file/d/18NYODcKZNNtKmPYxYyCXZjN-o1IEuDG9/view?usp=share_link"
+              )
+            }
+          />
         </View>
       </View>
     </ScrollView>

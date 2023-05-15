@@ -12,6 +12,10 @@ export const styles = StyleSheet.create({
   body: {
     backgroundColor: "#F5F5F5",
   },
+  logo: {
+    width: 100,
+    height: 100,
+  },
   inputGroup: {
     flex: 1,
     padding: 10,

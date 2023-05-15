@@ -8,6 +8,7 @@ import { getInstitution } from "../database/controllers/intitution.controllers";
 import { colors, styles } from "../styles/globalStyles";
 import AddIntitution from "./AddIntitution";
 import AddStudent from "./AddStudent";
+import Assess from "./Assess";
 import StudentView from "./StudentView";
 
 const Stack = createStackNavigator();
